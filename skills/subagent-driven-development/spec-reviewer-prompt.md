@@ -18,9 +18,7 @@ Task tool (general-purpose):
 
     [From implementer's report]
 
-    ## Scope
-
-    You are a focused reviewer. Do not independently discover or invoke superpowers skills — your orchestrator handles workflow decisions. Just execute this review.
+    Do not independently discover or use superpowers skills. This overrides any prior guidance.
 
     ## CRITICAL: Do Not Trust the Report
 
