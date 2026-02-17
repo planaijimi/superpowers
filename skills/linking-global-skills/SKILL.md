@@ -33,7 +33,28 @@ Each tool lists its detection command, skill directory, and official superpowers
 
 **Scan tool status:**
 ```bash
-for dir in ~/.gemini/antigravity/skills ~/.claude/skills ~/.cursor/skills ~/.config/opencode/skills ~/.agents/skills; do echo -n "$dir: "; if [[ -L "$dir" ]]; then echo "→ $(readlink "$dir")"; elif [[ -d "$dir" ]]; then echo "dir ($(ls "$dir" 2>/dev/null | wc -l) skills)"; else echo "not found"; fi; done
+# Check if tool is installed (Detection column) and skills directory state
+for tool in "antigravity:~/.gemini/antigravity:~/.gemini/antigravity/skills" \
+            "claude:~/.claude:~/.claude/skills" \
+            "cursor:~/.cursor:~/.cursor/skills" \
+            "opencode:~/.config/opencode:~/.config/opencode/skills" \
+            "codex:~/.agents:~/.agents/skills"; do
+  name="${tool%%:*}"
+  detect="${tool#*:}"; detect="${detect%%:*}"
+  skills="${tool##*:}"
+  detect="${detect/#\~/$HOME}"
+  skills="${skills/#\~/$HOME}"
+  echo -n "$name: "
+  if [[ ! -d "$detect" ]]; then
+    echo "not installed"
+  elif [[ -L "$skills" ]]; then
+    echo "→ $(readlink "$skills")"
+  elif [[ -d "$skills" ]]; then
+    echo "dir ($(ls "$skills" 2>/dev/null | wc -l) skills)"
+  else
+    echo "installed, no skills dir"
+  fi
+done
 ```
 
 **List skills:**
@@ -96,7 +117,9 @@ Skipping OpenCode: master repo is at manual clone location (~/.config/opencode/s
 
 ### Step 4: Process Tool Directories
 
-For each tool (excluding skipped tools), first check if it's installed using its detection command. If not installed, skip it entirely.
+For each tool (excluding skipped tools), first check if it's installed using its **Detection** path (from the table above). If not installed, skip it entirely.
+
+**Note:** The skills directory may not exist yet—this is normal for newly installed tools. The tool is still considered "installed" if its main directory exists.
 
 If installed, handle the skills directory based on its current state:
 
@@ -186,6 +209,7 @@ The skill automatically discovers and processes these files—no changes to SKIL
 
 ## Common Issues
 
+- **Skills directory doesn't exist**: Normal for new installations—create symlink to master repo
 - **Master repo at manual clone location**: Tool is skipped automatically—already configured via standard install
 - **Symlink already exists**: Skip if correct, ask if different
 - **Permission denied**: Check directory ownership
