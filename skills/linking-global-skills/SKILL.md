@@ -9,32 +9,25 @@ description: Use when setting up or synchronizing AI tool skills across multiple
 
 ## Supported Tools
 
-Each tool lists its detection command and skill directory:
+Each tool lists its detection command, skill directory, and official superpowers clone location (if applicable):
 
-- **Antigravity**: detected by `[[ -d ~/.gemini/antigravity ]]`
-  Skills: `~/.gemini/antigravity/skills/`
-
-- **Claude Code**: detected by `[[ -d ~/.claude ]]`
-  Skills: `~/.claude/skills/`
-
-- **Cursor**: detected by `[[ -d ~/.cursor ]]`
-  Skills: `~/.cursor/skills/`
-
-- **OpenCode**: detected by `[[ -d ~/.config/opencode ]]`
-  Skills: `~/.config/opencode/skills/`
-
-- **Codex/OpenAI/Agents**: detected by `[[ -d ~/.agents ]]`
-  Skills: `~/.agents/skills/`
-
-- **Custom tools**: See "Tool Integration Files" below
+| Tool | Detection | Skills Directory | Official Superpowers Clone |
+|------|-----------|------------------|---------------------------|
+| Antigravity | `~/.gemini/antigravity` | `~/.gemini/antigravity/skills/` | N/A (marketplace) |
+| Claude Code | `~/.claude` | `~/.claude/skills/` | N/A (marketplace) |
+| Cursor | `~/.cursor` | `~/.cursor/skills/` | N/A (marketplace) |
+| OpenCode | `~/.config/opencode` | `~/.config/opencode/skills/` | `~/.config/opencode/superpowers` |
+| Codex | `~/.agents` | `~/.agents/skills/` | `~/.codex/superpowers` |
+| Custom tools | See "Tool Integration Files" below |
 
 ## Workflow
 
 1. Ask user for master repository path
 2. Validate master repository
-3. Scan and process each tool directory
-4. Process tool integration files (for non-symlink tools)
-5. Cleanup orphaned symlinks
+3. Identify tools to skip (master repo is at official superpowers location)
+4. Scan and process each remaining tool directory
+5. Process tool integration files (for non-symlink tools)
+6. Cleanup orphaned symlinks
 
 ## Quick Reference
 
@@ -77,9 +70,30 @@ ls /path/to/master/repo/
 
 Confirm it contains skill directories (folders with SKILL.md files).
 
-### Step 3: Process Tool Directories
+### Step 3: Identify Tools to Skip
 
-For each tool, first check if it's installed using its detection command. If not installed, skip it entirely.
+If the master repository is located at an official superpowers clone location, skip that tool—it's already configured correctly via the official installation method.
+
+**Detection logic:**
+```bash
+MASTER_REPO="/path/to/user/provided/repo"
+MASTER_REPO_REAL=$(cd "$MASTER_REPO" && pwd)
+
+# Check each tool's official location
+case "$MASTER_REPO_REAL" in
+  */.config/opencode/superpowers) SKIP_OPENCODE=true ;;
+  */.codex/superpowers) SKIP_CODEX=true ;;
+esac
+```
+
+Report to user which tools will be skipped and why:
+```
+Skipping OpenCode: master repo is at official location (~/.config/opencode/superpowers)
+```
+
+### Step 4: Process Tool Directories
+
+For each tool (excluding skipped tools), first check if it's installed using its detection command. If not installed, skip it entirely.
 
 If installed, handle the skills directory based on its current state:
 
@@ -89,7 +103,7 @@ If installed, handle the skills directory based on its current state:
 - **Non-empty directory**: Ask user: Merge, Replace, or Skip
 - **Does not exist**: Create symlink to master
 
-### Step 4: Handle Merge
+### Step 5: Handle Merge
 
 **CRITICAL: Never overwrite existing skills in the master repository.**
 
@@ -114,7 +128,7 @@ When user chooses Merge:
    rm -rf tool/skills && ln -s master tool/skills
    ```
 
-### Step 5: Process Integration Files
+### Step 6: Process Integration Files
 
 Some tools require special configuration (not symlinks). These are defined in separate files.
 
@@ -129,7 +143,7 @@ ls linking-global-skills/*.md | grep -v SKILL.md
 3. If "installed" → follow `## Instructions`
 4. Report result to user
 
-### Step 6: Cleanup Orphaned Symlinks
+### Step 7: Cleanup Orphaned Symlinks
 
 After processing all tools, check for symlinks pointing to the master repo in directories of uninstalled tools.
 
@@ -169,6 +183,7 @@ The skill automatically discovers and processes these files—no changes to SKIL
 
 ## Common Issues
 
+- **Master repo at official location**: Tool is skipped automatically—already configured via official install
 - **Symlink already exists**: Skip if correct, ask if different
 - **Permission denied**: Check directory ownership
 - **Master repo not found**: Ask user for correct path
