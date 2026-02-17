@@ -1,6 +1,6 @@
 ---
 name: linking-global-skills
-description: Use when setting up or synchronizing AI tool skills across multiple tools, or when a new tool needs access to shared skills
+description: Use when setting up or synchronizing AI tool skills across multiple tools, or when a new tool needs access to shared skills (Linux/macOS only)
 ---
 
 # Linking Global Skills
