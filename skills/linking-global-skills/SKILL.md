@@ -11,11 +11,11 @@ description: Use when setting up or synchronizing AI tool skills across multiple
 
 Each tool lists its detection command, skill directory, and official superpowers clone location (if applicable):
 
-| Tool | Detection | Skills Directory | Official Superpowers Clone |
-|------|-----------|------------------|---------------------------|
-| Antigravity | `~/.gemini/antigravity` | `~/.gemini/antigravity/skills/` | N/A (marketplace) |
-| Claude Code | `~/.claude` | `~/.claude/skills/` | N/A (marketplace) |
-| Cursor | `~/.cursor` | `~/.cursor/skills/` | N/A (marketplace) |
+| Tool | Detection | Skills Directory | Manual Superpowers Clone |
+|------|-----------|------------------|--------------------------|
+| Antigravity | `~/.gemini/antigravity` | `~/.gemini/antigravity/skills/` | `~/.gemini/antigravity/superpowers` |
+| Claude Code | `~/.claude` | `~/.claude/skills/` | `~/.claude/superpowers` |
+| Cursor | `~/.cursor` | `~/.cursor/skills/` | `~/.cursor/superpowers` |
 | OpenCode | `~/.config/opencode` | `~/.config/opencode/skills/` | `~/.config/opencode/superpowers` |
 | Codex | `~/.agents` | `~/.agents/skills/` | `~/.codex/superpowers` |
 | Custom tools | See "Tool Integration Files" below |
@@ -72,15 +72,18 @@ Confirm it contains skill directories (folders with SKILL.md files).
 
 ### Step 3: Identify Tools to Skip
 
-If the master repository is located at an official superpowers clone location, skip that tool—it's already configured correctly via the official installation method.
+If the master repository is located at a manual superpowers clone location, skip that tool—it's already configured correctly via the standard installation method.
 
 **Detection logic:**
 ```bash
 MASTER_REPO="/path/to/user/provided/repo"
 MASTER_REPO_REAL=$(cd "$MASTER_REPO" && pwd)
 
-# Check each tool's official location
+# Map each tool's manual clone location to the tool to skip
 case "$MASTER_REPO_REAL" in
+  */.gemini/antigravity/superpowers) SKIP_ANTIGRAVITY=true ;;
+  */.claude/superpowers) SKIP_CLAUDE=true ;;
+  */.cursor/superpowers) SKIP_CURSOR=true ;;
   */.config/opencode/superpowers) SKIP_OPENCODE=true ;;
   */.codex/superpowers) SKIP_CODEX=true ;;
 esac
@@ -88,7 +91,7 @@ esac
 
 Report to user which tools will be skipped and why:
 ```
-Skipping OpenCode: master repo is at official location (~/.config/opencode/superpowers)
+Skipping OpenCode: master repo is at manual clone location (~/.config/opencode/superpowers)
 ```
 
 ### Step 4: Process Tool Directories
@@ -183,7 +186,7 @@ The skill automatically discovers and processes these files—no changes to SKIL
 
 ## Common Issues
 
-- **Master repo at official location**: Tool is skipped automatically—already configured via official install
+- **Master repo at manual clone location**: Tool is skipped automatically—already configured via standard install
 - **Symlink already exists**: Skip if correct, ask if different
 - **Permission denied**: Check directory ownership
 - **Master repo not found**: Ask user for correct path
