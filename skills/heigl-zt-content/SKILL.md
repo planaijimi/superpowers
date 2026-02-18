@@ -84,9 +84,10 @@ Pflichtfelder je Eintrag:
 1. Thema wählen (nach Prioritäten + Relevanz)
 2. Quellenlage prüfen (intern zuerst)
 3. Entwurf schreiben (Hook → Punkte → CTA)
-4. Transparenzblock ergänzen
-5. Qualitätscheck durchgehen
-6. Final ausgeben (copy-paste-fähig)
+4. Humanizer-Pass anwenden mit Skill `heigl-linkedin-humanizer` (Pflicht)
+5. Transparenzblock ergänzen
+6. Qualitätscheck durchgehen
+7. Final ausgeben (copy-paste-fähig)
 
 ## Ressourcen
 - Repo-Extrakt neu erzeugen:

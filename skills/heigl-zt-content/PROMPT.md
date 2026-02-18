@@ -1,6 +1,6 @@
 ---
 purpose: dev-only
-version: 10
+version: 11
 ---
 
 # Active Prompt (Current)
@@ -80,6 +80,7 @@ version: 10
 - Bei Quellenbezug: Quelle transparent nennen (Link + Kontext).
 - Unsicherheiten transparent und konservativ formulieren.
 - Tonalität: transparent, ehrlich, präzise.
+- Vor Finalisierung jedes Posts ist ein Humanizer-Pass mit Skill `heigl-linkedin-humanizer` Pflicht.
 
 ## Dokumentation (Pflicht für Gruppen-Posts)
 - Jede an Telegram-Gruppe gesendete News wird zusätzlich strukturiert protokolliert in:
