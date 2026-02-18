@@ -1,52 +1,95 @@
 ---
 name: heigl-zt-content
-description: Use when creating, reviewing, improving, or repurposing German content for Heigl ZT across website, LinkedIn, and social media, including competitor benchmarking and adapting research into brand-consistent drafts.
+description: Use when creating, refining, or repurposing German LinkedIn and website content for Heigl ZT with transparent sourcing, zero-copy rewriting, and a practical B2B focus.
 ---
 
 # Heigl ZT Content
 
-## Überblick
-Nutze diesen Skill für alle Content-Aufgaben rund um Heigl ZT: Analyse, Optimierung, Neuentwicklung und kanalgerechte Adaption.
+## Ziel
+Erstelle hochwertigen, umsetzbaren Content für Heigl ZT mit Fokus auf:
+- Sicherheitsbeauftragte in großen Unternehmen (DACH)
+- fachliche Autorität statt Marketing-Floskeln
+- klare Wirkung (Reichweite, Vertrauen, Anfragen)
 
-Ziel: Inhalte mit messbarer Marketingwirkung erstellen, in klarer Corporate Language, ohne Floskeln.
+## Pflichtquellen (in dieser Reihenfolge)
+1. `PROMPT.md` (aktiver Arbeitsrahmen)
+2. `references/heigl-zt-repo-analysis.md`
+3. `references/heigl-zt-corpus.md`
+4. `references/regulatory-watch.md` (vorrecherchierte Primärquellen + Content-Winkel)
+5. `references/source-transparency-template.md` (Standard für saubere Quellen-/Zitatzeilen)
+6. `references/hook-angle-library.md` (schnelle, fachlich belastbare Hook-Starts ohne Clickbait)
+7. `references/cta-pattern-library.md` (schnelle, fachlich saubere CTA-Auswahl je Thema)
+8. `references/comment-response-playbook.md` (schnelle, fachlich saubere Antwortmuster für LinkedIn-Kommentare)
+9. `references/risk-safe-phrasing-library.md` (rechtlich konservative, klare Formulierungen ohne Überversprechen)
+10. `references/rapid-review-checklist.md` (90-Sekunden-Freigabecheck vor Versand)
+11. `references/group-post-log.jsonl` (strukturierte Historie für spätere Website-Optimierung)
+12. Nur bei Bedarf: aktuelle externe Quellen (News/Normen/Regulatorik)
 
-## Pflichtergebnis
-1. **Substanz vor Stil:** Nutzen, Klarheit, Relevanz für die Zielgruppe.
-2. **Corporate Language:** Direkt, professionell, verständlich, kompetent.
-3. **Kanalfit:** Format, Länge und CTA passend zum Kanal.
-4. **Umsetzbarkeit:** Vorschläge so konkret, dass sie sofort nutzbar sind.
+## Verbindliche Regeln
+- Keine erfundenen Fakten.
+- Kein Copy-Paste aus Quellen/Konkurrenz.
+- Immer eigenständig formulieren.
+- Zitate nur kurz und klar gekennzeichnet.
+- Bei Quellenbezug transparent: Link + kurzer Kontext.
+- Bei Unsicherheit konservativ formulieren.
 
-## Workflow
-1. **Ziel klären**
-   - Zielgruppe
-   - Kanal (Website, LinkedIn, Social)
-   - Ziel (Awareness, Vertrauen, Leads)
-2. **Quellen sammeln**
-   - Heigl-ZT-Basisinhalte aus Repo-Extrakt (siehe Ressourcen)
-   - Relevante Konkurrenzbeispiele
-   - Aktuelle Recherchequellen
-3. **Analyse liefern**
-   - Stärken/Schwächen
-   - 3–7 konkrete Verbesserungen mit kurzer Begründung
-4. **Content erzeugen**
-   - 1 finale Version + optional 1–2 Varianten
-   - klare Struktur (Hook, Kernbotschaft, CTA)
-5. **Qualitätscheck**
-   - markenkonsistent
-   - keine unbelegten Behauptungen
-   - sprachlich präzise, keine Füllsätze
+## Priorisierte Leistungen (Content-Gewichtung)
+1. AM-VO Überprüfungen
+2. Maschinensicherheit & CE-Kennzeichnung
+3. Gutachtenerstellung Maschinen-/Anlagenbau
+4. GewO §82b Überprüfungen
 
-## Standard-Ausgabeformat
-- **Ziel**
-- **Zielgruppe**
-- **Kanal/Format**
-- **Finaler Text**
-- **CTA**
-- **Kurzbegründung** (2–4 Bulletpoints)
-- **Optional: Varianten**
+## Tagesbetrieb (Telegram `heigl-zt-news`)
+- Frequenz: Montag bis Samstag
+- Zeiten (Europe/Vienna): 06:00, 10:00, 12:00
+- Pro Slot: 1 klarer Vorschlag
+- Pro Tag: 3 gemischte Vorschläge (privat/firma flexibel nach Relevanz)
+- Inhalte müssen auch für Alexander persönlich interessant sein
+
+## Output-Format (Standard)
+Nutze genau diese Struktur (ohne Einleitung/Meta-Text):
+
+1. **Titelzeile** (kurz, knackig, LinkedIn-tauglich, ohne Prefix)
+2. **Leerzeile**
+3. **Hook** (1–2 Zeilen)
+4. **Einordnung** (kurz)
+5. **3–5 konkrete Punkte** (praxisnah)
+6. **Nächster Schritt / Empfehlung**
+7. **CTA**
+8. **Optional: 3–5 Hashtags**
+9. **Transparenzblock**
+   - `Quelle(n): ...`
+   - `Zitat: keine` _oder_ `Zitat: "..." (Quelle)`
+
+## Qualitätscheck vor Ausgabe
+- Ist der Nutzen für Sicherheitsbeauftragte sofort erkennbar?
+- Ist der Text klar, präzise, ohne Blabla?
+- Ist ein starker Hook enthalten?
+- Ist der Text vollständig eigenständig formuliert?
+- Sind Quellen/Zitate transparent ausgewiesen?
+
+## Dokumentationspflicht (für spätere Website-Optimierung)
+Nach jedem Gruppen-Post in `heigl-zt-news` einen JSONL-Eintrag ergänzen in:
+- `references/group-post-log.jsonl`
+
+Pflichtfelder je Eintrag:
+- `ts`, `channel`, `group`, `topic`, `servicePriority`, `title`, `hook`, `postText`, `cta`, `hashtags`, `sources`, `quote`, `notesForWebsite`
+
+`notesForWebsite` muss enthalten:
+- Kernproblem der Zielgruppe
+- Nutzenversprechen
+- konkrete Website-Content-Chance (z. B. FAQ, Abschnitt, Landingpage-Idee)
+
+## Schneller Workflow
+1. Thema wählen (nach Prioritäten + Relevanz)
+2. Quellenlage prüfen (intern zuerst)
+3. Entwurf schreiben (Hook → Punkte → CTA)
+4. Transparenzblock ergänzen
+5. Qualitätscheck durchgehen
+6. Final ausgeben (copy-paste-fähig)
 
 ## Ressourcen
-- Repo-Text-Extrakt erzeugen/aktualisieren:
+- Repo-Extrakt neu erzeugen:
 
 ```bash
 python3 scripts/extract_heigl_repo_text.py \
@@ -57,11 +100,6 @@ python3 scripts/extract_heigl_repo_text.py \
   --include-dir src/layouts
 ```
 
-- Extrahierter Korpus:
+- Interne Wissensbasis:
   - `references/heigl-zt-corpus.md`
-
-## Guardrails
-- Keine erfundenen Fakten.
-- Keine rechtlich riskanten Aussagen ohne Grundlage.
-- Keine 1:1-Übernahme von Konkurrenztexten.
-- Bei fehlendem Kontext max. 3 präzise Rückfragen stellen.
+  - `references/heigl-zt-repo-analysis.md`
