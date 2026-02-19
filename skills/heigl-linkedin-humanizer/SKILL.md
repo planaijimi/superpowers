@@ -23,6 +23,10 @@ Jeden Post so überarbeiten, dass er klar menschlich klingt: präzise, konkret, 
    - Satzlängen variieren, keine mechanischen Dreierserien.
 5. **Direkte Sprache**
    - Möglichst einfache Verben (ist/hat/braucht/muss), kein Kunststil.
+6. **Keine Gedankenstrich Konstruktionen**
+   - In Fließtext keine Gedankenstriche verwenden.
+   - Verboten sind lange Gedankenstriche sowie Minus mit Leerzeichen als Einschub.
+   - Stattdessen klare Satztrennung oder Formulierungen mit "oder", "und", "aber".
 
 ## KI-Muster, die raus müssen (Hard Fail)
 - Aufgeblasene Bedeutungssprache (z. B. "pivotal", "Landscape", "transformativ"-Äquivalente)
