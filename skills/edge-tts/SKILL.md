@@ -1,9 +1,6 @@
 ---
 name: edge-tts
-description: |
-  Text-to-speech conversion using node-edge-tts npm package for generating audio from text.
-  Supports multiple voices, languages, speed adjustment, pitch control, and subtitle generation.
-  Use when: (1) User requests audio/voice output with the "tts" trigger or keyword. (2) Content needs to be spoken rather than read (multitasking, accessibility, driving, cooking). (3) User wants a specific voice, speed, pitch, or format for TTS output.
+description: Use when the user asks for any spoken reply or voice note, or when text should be delivered as audio; applies especially for Telegram voice-note delivery with language-matched voices and single-output sending.
 ---
 
 # Edge-TTS Skill
@@ -17,18 +14,41 @@ Generate high-quality text-to-speech audio using Microsoft Edge's neural TTS ser
 When you detect TTS intent from triggers or user request:
 
 1. **Call the tts tool** (Clawdbot built-in) to convert text to speech
-2. The tool returns a MEDIA: path
-3. Clawdbot routes the audio to the current channel
+2. If channel is Telegram, **send only one output as voice note** via `message.send` with `asVoice=true`
+3. Do **not** return/post the raw `MEDIA:` line in chat when already sending via `message.send`
 
 ```javascript
-// Example: Built-in tts tool usage
+// Step 1: render audio
 tts("Your text to convert to speech")
 // Returns: MEDIA: /path/to/audio.mp3
+
+// Step 2 (Telegram): send exactly one voice note
+message.send({ channel: "telegram", target: "<chat-id>", media: "<path>", asVoice: true })
 ```
 
 ## Trigger Detection
 
 Recognize "tts" keyword as TTS requests. The skill automatically filters out TTS-related keywords from text before conversion to avoid converting the trigger words themselves to audio.
+
+## Language-to-Voice Policy (default)
+
+Use language-matched voices unless user explicitly requests another voice:
+
+- German text (`de*`) → `de-DE-KatjaNeural`
+- English text (`en*`) → `en-US-MichelleNeural`
+
+If unsure, default to the language of the user message.
+
+## Telegram Delivery Rule (critical)
+
+For Telegram TTS replies, always use this sequence:
+
+1. Generate audio with Edge-TTS (`scripts/tts-converter.js`) and explicit language-matched voice
+2. Send with `message.send(..., asVoice=true)`
+3. Return `NO_REPLY` to avoid duplicate posting
+
+Never post both MP3 file and voice note.
+Never combine `[[audio_as_voice]]` and `MEDIA:` in the assistant text reply.
 
 ## Advanced Customization
 
